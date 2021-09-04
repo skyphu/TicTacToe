@@ -22,6 +22,7 @@ namespace TicTacToe {
               break;
             default:
               Console.WriteLine("Invalid input.");
+              invalidChoice = true;
           }
         } while(invalidChoice);
         

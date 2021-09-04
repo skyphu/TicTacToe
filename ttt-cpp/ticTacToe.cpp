@@ -10,15 +10,18 @@
 * ====================================================== */
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <fstream>
 
+using namespace std;
 //Constants
 const int ROWS = 3;
 const int COLS = 3;
 const int O = 0;
 const int X = 1;
 const int EMPTY = -1;
+const string GAME_FILE = "ttt_data.txt";    //phase 5
 
-using namespace std;
 /*==================================================
 * GameData is a struct that contains game data.
 * It facilitates data transfer from one function to
@@ -54,13 +57,30 @@ void askPlayerSymbol(Game *tic);
 bool isPositionValid(char pos);
 bool checkAndSetMove(Game *tic, int row, int col);  //own addition
 int someoneWins(Game *tic);         //phase 3
+void computerPlays(Game *tic);      //phase 4
+int checkGameStatus(Game *tic);     //phase 5
+void writeHeader(Game *tic);
+void save(Game *tic);
+void writeStats(Game *tic);
+int saveGameStatus(Game *tic);
 
 int main() {
   Game *tic = new Game;
   bool playAgain = false;
+  tic->draws = 0;
+  tic->playerWins = 0;
+  tic->computerWins = 0;
+  writeHeader(tic);
 
   do {
     play(tic);
+    cout << "================================================" << endl;
+    cout << "||     PLAYER       COMPUTER        DRAWS     ||" << endl;
+    cout << "||" << setw(8) << tic->playerWins 
+         << setw(14) << tic->computerWins 
+         << setw(15) << tic->draws
+         << setw(9)  << "||" << endl;
+    cout << "================================================" << endl;
     cout << "Would you like to play again? " << endl;
     cout << "(1) Yes" << endl;
     cout << "(0) No" << endl;
@@ -69,6 +89,10 @@ int main() {
 
   cout << "Thanks for playing!" << endl;
 
+  string gameSummary = "cat ";
+  gameSummary.append(GAME_FILE);
+  system(gameSummary.c_str());
+
   return EXIT_SUCCESS;
 }
 
@@ -76,22 +100,27 @@ int play(Game *tic) {
   init(tic);            //Makes all cells empty.
 
   do {
-    askPlayerMove(tic); //Displays board and asks for player move.
+    askPlayerMove(tic);   //Displays board and asks for player move.
+    if (checkGameStatus(tic) == EMPTY) {
+      computerPlays(tic);   //Computer chooses a move.
+      checkGameStatus(tic); //Check whether someone has won or game is over. 
+    } 
   } while(!tic->gameOver);
 
+  writeStats(tic);
   return EXIT_SUCCESS;
 }
 
 void init(Game *tic) {
   for (int row = 0; row < ROWS; row++) {
     for (int col = 0; col < COLS; col++) {
-      tic -> board[row][col] = EMPTY;
+      tic->board[row][col] = EMPTY;
     }
   }
 
-  tic -> emptyCells = ROWS * COLS;
-  tic -> position = 0;
-  tic -> gameOver = false;
+  tic->emptyCells = ROWS * COLS;
+  tic->position = 0;
+  tic->gameOver = false;
   askPlayerSymbol(tic);
 }
 
@@ -99,7 +128,7 @@ void displayRaw(Game *tic) {
   for(int row = 0; row < ROWS; row++) {
     cout << "\t\t";
     for(int col = 0; col < COLS; col++) {
-      cout << tic -> board[row][col] << "  ";
+      cout << tic->board[row][col] << "  ";
     }
     cout << endl;
   }
@@ -111,11 +140,12 @@ void display(Game *tic) {
   for (int row = 0; row < ROWS; row++) {
     cout << "\t\t";
     for(int col = 0; col < COLS; col++) {
-      symbol = convertToSymbol(tic -> board[row][col]);
+      symbol = convertToSymbol(tic->board[row][col]);
       cout << symbol << "  ";
     }
     cout << endl;
   }
+  save(tic);
 }
 
 char convertToSymbol(int val) {
@@ -144,11 +174,11 @@ void askPlayerSymbol(Game *tic) {
   cin >> userWantsX;
 
   if(userWantsX) {
-    tic -> playerSymbol = X;
-    tic -> computerSymbol = O;
+    tic->playerSymbol = X;
+    tic->computerSymbol = O;
   } else {
-    tic -> playerSymbol = O;
-    tic -> computerSymbol = X;
+    tic->playerSymbol = O;
+    tic->computerSymbol = X;
   }
 }
 
@@ -156,7 +186,7 @@ void askPlayerMove(Game *tic) {
   //Asks for the player to decide on a move on their turn.
   //Phase 2.
   bool moveCompleted = false;
-  tic -> turn = tic -> playerSymbol;     //Assigns turn to player
+  tic->turn = tic->playerSymbol;     //Assigns turn to player
   char pos = '0';
 
   do {
@@ -172,7 +202,7 @@ void askPlayerMove(Game *tic) {
       }
     } while(!isPositionValid(pos));
 
-    tic -> position = (int) pos - 48;
+    tic->position = (int) pos - 48;
     moveCompleted = playOn(tic);
 
   } while(!moveCompleted && !tic->emptyCells);
@@ -208,13 +238,13 @@ bool isPositionValid(char pos) {
 bool playOn(Game *tic) {
   //Checks if plays can be made.
   //Phase 2.
-  if(!tic -> emptyCells) {
-    tic -> gameOver = true;
+  if(!tic->emptyCells) {
+    tic->gameOver = true;
     cout << "All cells are full." << endl;
     return true;
   }
 
-  switch(tic -> position) {
+  switch(tic->position) {
     case 1:
       return checkAndSetMove(tic, 0, 0);
     case 2:
@@ -244,9 +274,9 @@ bool checkAndSetMove(Game *tic, int row, int col) {
   //and if so, sets the position to player symbol and
   //updates the number of empty cells.
   //Own addition for readability.
-  if (tic -> board[row][col] == EMPTY) {
-    tic -> board[row][col] = tic -> turn;
-    tic -> emptyCells--;
+  if (tic->board[row][col] == EMPTY) {
+    tic->board[row][col] = tic->turn;
+    tic->emptyCells--;
     return true;
   }
   return false;
@@ -304,4 +334,131 @@ int someoneWins(Game *tic) {
   }
 
   return EMPTY;
+}
+
+void computerPlays(Game *tic) {
+  bool playCompleted = false;
+  tic->turn = tic->computerSymbol;
+
+  do {
+    if (tic->position == 9) {
+      tic->position = 1;
+    } else {
+      tic->position++;
+    }
+
+    playCompleted = playOn(tic);
+  } while (!playCompleted && !tic->emptyCells);
+}
+
+int checkGameStatus(Game *tic) {
+  tic->winner = someoneWins(tic);
+
+  if(tic->winner == tic->playerSymbol) {
+    display(tic);
+    cout << "Congratulations, you've won!!" << endl;
+    tic->playerWins++;
+    saveGameStatus(tic);
+    return EXIT_SUCCESS;
+  } else if(tic->winner == tic->computerSymbol) {
+    display(tic);
+    cout << "You lose..." << endl;
+    tic->computerWins++;
+    saveGameStatus(tic);
+    return EXIT_SUCCESS;
+  } else if(!tic->emptyCells) {
+    display(tic);
+    cout << "It's a draw!!" << endl;
+    tic->draws++;
+    saveGameStatus(tic);
+    return EXIT_SUCCESS;
+  }
+  return EMPTY;
+}
+
+void writeHeader(Game *tic) {
+  ofstream outputFile;
+  outputFile.open(GAME_FILE);
+
+  if(!outputFile) {
+    cout << "Error: File [" << GAME_FILE << "] could not be opened." << endl;
+    return;
+  }
+
+  outputFile << "WELCOME TO TIC-TAC-TOE" << endl << endl
+             << "Instructions: Select a cell every turn." << endl
+             << "The objective is to connect three symbols" << endl
+             << "in a line to win. The first to achieve this" << endl
+             << "is the winner!" << endl
+             << "==============================================" << endl << endl;
+
+  outputFile.close();
+  writeStats(tic);
+}
+
+void writeStats(Game *tic) {
+  ofstream outputFile;
+  outputFile.open(GAME_FILE, ios::app);
+
+  if(!outputFile) {
+    cout << "Error: File [" << GAME_FILE << "] could not be opened." << endl;
+    return;
+  }
+
+  outputFile << "GAME STATS" << endl << endl
+             << "PLAYER WINS: " << tic->playerWins << endl
+             << "COMPUTER WINS: " << tic->computerWins << endl
+             << "DRAWS: " << tic->draws << endl
+             << "==============================================" << endl << endl;
+
+  outputFile.close();
+}
+
+void save(Game *tic) {
+  ofstream outputFile;
+  outputFile.open(GAME_FILE, ios::app);
+
+  if (!outputFile) {
+    cout << "Error: File [" << GAME_FILE << "] could not be opened." << endl;
+    return;
+  }
+
+  char symbol = EMPTY;
+
+  for(int row = 0; row < ROWS; row++) {
+    outputFile << "\t\t";
+    for(int col = 0; col < COLS; col++) {
+      symbol = convertToSymbol(tic-> board[row][col]);
+      outputFile << symbol << "  ";
+    }
+    outputFile << endl;
+  }
+  outputFile << endl << endl;
+  outputFile.close();
+  
+}
+
+int saveGameStatus(Game *tic) {
+  ofstream outputFile;
+  outputFile.open(GAME_FILE, ios::app);
+
+  if(!outputFile) {
+    cout << "Error: File [" << GAME_FILE << "] could not be opened." << endl;
+    return EXIT_FAILURE;
+  }
+
+  if(tic->winner == tic->playerSymbol) {
+    outputFile << "Congratulations! You win!" << endl;
+    return EXIT_SUCCESS;
+  } else if(tic->winner == tic->computerSymbol) {
+    outputFile << "You lose!" << endl;
+    return EXIT_SUCCESS;
+  } else if(!tic->emptyCells) {
+    outputFile << "It's a draw!" << endl;
+    return EXIT_SUCCESS;
+  }
+
+  outputFile << endl;
+  outputFile.close();
+  return EXIT_SUCCESS;
 }

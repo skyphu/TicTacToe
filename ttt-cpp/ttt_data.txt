@@ -1,0 +1,43 @@
+WELCOME TO TIC-TAC-TOE
+
+Instructions: Select a cell every turn.
+The objective is to connect three symbols
+in a line to win. The first to achieve this
+is the winner!
+==============================================
+
+GAME STATS
+
+PLAYER WINS: 0
+COMPUTER WINS: 0
+DRAWS: 0
+==============================================
+
+		_  _  _  
+		_  _  _  
+		_  _  _  
+
+
+		X  O  _  
+		_  _  _  
+		_  _  _  
+
+
+		X  O  _  
+		X  O  _  
+		_  _  _  
+
+
+		X  O  _  
+		X  O  _  
+		X  _  _  
+
+
+Congratulations! You win!
+GAME STATS
+
+PLAYER WINS: 1
+COMPUTER WINS: 0
+DRAWS: 0
+==============================================
+

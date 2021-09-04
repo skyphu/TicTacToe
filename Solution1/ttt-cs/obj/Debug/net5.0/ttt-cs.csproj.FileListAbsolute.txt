@@ -1,0 +1,15 @@
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/bin/Debug/net5.0/ttt-cs.deps.json
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/bin/Debug/net5.0/ttt-cs.runtimeconfig.json
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/bin/Debug/net5.0/ttt-cs.runtimeconfig.dev.json
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/bin/Debug/net5.0/ttt-cs.dll
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/bin/Debug/net5.0/ref/ttt-cs.dll
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/bin/Debug/net5.0/ttt-cs.pdb
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.csprojAssemblyReference.cache
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.AssemblyInfoInputs.cache
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.AssemblyInfo.cs
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.csproj.CoreCompileInputs.cache
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.dll
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ref/ttt-cs.dll
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.pdb
+/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/Debug/net5.0/ttt-cs.genruntimeconfig.cache
