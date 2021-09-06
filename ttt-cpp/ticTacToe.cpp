@@ -65,7 +65,7 @@ void writeStats(Game *tic);
 int saveGameStatus(Game *tic);
 
 int main() {
-  Game *tic = new Game;
+  Game *tic = new Game;     //initialize a new game
   bool playAgain = false;
   tic->draws = 0;
   tic->playerWins = 0;
@@ -97,6 +97,10 @@ int main() {
 }
 
 int play(Game *tic) {
+  //Orchestrates the game process. Will ask for
+  //the player to make a move, check whether a win or
+  //draw condition has been met, then asks for the
+  //computer's move.
   init(tic);            //Makes all cells empty.
 
   do {
@@ -112,6 +116,9 @@ int play(Game *tic) {
 }
 
 void init(Game *tic) {
+  //Initializes the game variables for a blank
+  //grid to start a new game.
+
   for (int row = 0; row < ROWS; row++) {
     for (int col = 0; col < COLS; col++) {
       tic->board[row][col] = EMPTY;
@@ -125,6 +132,10 @@ void init(Game *tic) {
 }
 
 void displayRaw(Game *tic) {
+  //For debugging purposes. Displays the grid
+  //as it appears in the system, with Xs and Os
+  //displayed as 1s and 0s respectively.
+
   for(int row = 0; row < ROWS; row++) {
     cout << "\t\t";
     for(int col = 0; col < COLS; col++) {
@@ -135,6 +146,8 @@ void displayRaw(Game *tic) {
 }
 
 void display(Game *tic) {
+  //Displays the game board.
+
   char symbol = EMPTY;
 
   for (int row = 0; row < ROWS; row++) {
@@ -150,7 +163,7 @@ void display(Game *tic) {
 
 char convertToSymbol(int val) {
   //Converts values to characters for display.
-  //Phase 1.
+  
   switch(val) {
     case X:
       return 'X';
@@ -165,7 +178,7 @@ void askPlayerSymbol(Game *tic) {
   //Asks the player if they want to play as X. Depending on
   //the answer, it sets the player symbol as the choice and
   //the computer symbol as the opposite.
-  //Phase 2.
+  
   bool userWantsX = true;
 
   cout << "Do you want X?" << endl;
@@ -184,7 +197,7 @@ void askPlayerSymbol(Game *tic) {
 
 void askPlayerMove(Game *tic) {
   //Asks for the player to decide on a move on their turn.
-  //Phase 2.
+  
   bool moveCompleted = false;
   tic->turn = tic->playerSymbol;     //Assigns turn to player
   char pos = '0';
@@ -210,7 +223,6 @@ void askPlayerMove(Game *tic) {
 
 void showPlayMap() {
   //Displays the grid for each valid input's location.
-  //Phase 2.
 
   int pos = 1;
   for(int row = 0; row < ROWS; row++) {
@@ -274,6 +286,7 @@ bool checkAndSetMove(Game *tic, int row, int col) {
   //and if so, sets the position to player symbol and
   //updates the number of empty cells.
   //Own addition for readability.
+
   if (tic->board[row][col] == EMPTY) {
     tic->board[row][col] = tic->turn;
     tic->emptyCells--;
@@ -285,7 +298,6 @@ bool checkAndSetMove(Game *tic, int row, int col) {
 int someoneWins(Game *tic) {
   //Checks that win conditions are fulfilled for
   //either player.
-  //Phase 3.
 
   int row = 0;
   int col = 0;
@@ -337,6 +349,10 @@ int someoneWins(Game *tic) {
 }
 
 void computerPlays(Game *tic) {
+  //Logic for the computer's moves. At this time,
+  //the computer will simply place its moves on the
+  //space next to the player's move.
+
   bool playCompleted = false;
   tic->turn = tic->computerSymbol;
 
@@ -352,6 +368,10 @@ void computerPlays(Game *tic) {
 }
 
 int checkGameStatus(Game *tic) {
+  //Checks whether either player or computer has
+  //met a win condition, or whether there has been a
+  //draw.
+
   tic->winner = someoneWins(tic);
 
   if(tic->winner == tic->playerSymbol) {
@@ -377,6 +397,8 @@ int checkGameStatus(Game *tic) {
 }
 
 void writeHeader(Game *tic) {
+  //Writes the game file header.
+
   ofstream outputFile;
   outputFile.open(GAME_FILE);
 
@@ -397,6 +419,8 @@ void writeHeader(Game *tic) {
 }
 
 void writeStats(Game *tic) {
+  //Writes the game stats into a file.
+
   ofstream outputFile;
   outputFile.open(GAME_FILE, ios::app);
 
@@ -415,6 +439,8 @@ void writeStats(Game *tic) {
 }
 
 void save(Game *tic) {
+  //Saves the game into a file.
+
   ofstream outputFile;
   outputFile.open(GAME_FILE, ios::app);
 
@@ -439,6 +465,8 @@ void save(Game *tic) {
 }
 
 int saveGameStatus(Game *tic) {
+  //Saves the game's results into the file.
+  
   ofstream outputFile;
   outputFile.open(GAME_FILE, ios::app);
 

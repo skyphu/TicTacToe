@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ElU6pMXfjT54FRu9gxDIOIcjQkcwPYaFd7K7h3g2PicmAGQXXyjC+DvzCVuuvXvCDRnyACbpua52iUKINGiujA==",
+  "dgSpecHash": "6PlKUCrOPQlcAgJbV2nq6dKYQ2O5gO8BE/fQlxFZJaiURY0NnjoB/a6/Vjv0PEvmM0Co8mLL270CxyPVIU+QxA==",
   "success": true,
-  "projectFilePath": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/ttt-cs.csproj",
+  "projectFilePath": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/ttt-cs/ttt-cs/ttt-cs.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/ttt-cs.csproj",
+      "projectUniqueName": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/ttt-cs/ttt-cs/ttt-cs.csproj",
       "projectName": "ttt-cs",
-      "projectPath": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/ttt-cs.csproj",
+      "projectPath": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/ttt-cs/ttt-cs/ttt-cs.csproj",
       "packagesPath": "/Users/alexrosario/.nuget/packages/",
-      "outputPath": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/Solution1/ttt-cs/obj/",
+      "outputPath": "/Users/alexrosario/Documents/GitHub/tic-tac-toe/ttt-cs/ttt-cs/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/alexrosario/.nuget/NuGet/NuGet.Config"

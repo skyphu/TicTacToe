@@ -1,9 +1,10 @@
 using System;
+using System.Data;
 using ttt_cs;
 
 namespace ttt_cs {
-  class GameData {
-    int[,] board = new int[GameConstants.ROWS, GameConstants.COLS];
+  public class GameData {
+    int[,] board = new int[GameConstants.Rows, GameConstants.Cols];
     int playerSymbol;
     int computerSymbol;
     int emptyCells;
@@ -25,10 +26,11 @@ namespace ttt_cs {
       emptyCells = GameConstants.ROWS * GameConstants.COLS;
       position = 0;
       gameOver = false;
-      askPlayerSymbol();
+      AskPlayerSymbol();
     }
-
-    void askPlayerSymbol() {
+  
+    public int GetCellContents(int row, int col) => board[row, col];
+    void AskPlayerSymbol() {
       //Asks the player if they want to play as X. Depending on
       //the answer, it sets the player symbol as the choice and
       //the computer symbol as the opposite.
